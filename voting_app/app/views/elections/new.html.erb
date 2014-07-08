@@ -1,0 +1,6 @@
+<%= form_for @election, action: :create do |f| %>
+  <%= f.label 'Election name' %>
+  <%= f.text_field :title %>
+  <%= f.submit %>
+<% end %>
+
