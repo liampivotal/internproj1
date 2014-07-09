@@ -1,11 +1,6 @@
 require 'spec_helper.rb'
 
 describe "Election Creation" do
-  let(:user) { User.new({email: "guy@gmail.com",
-                         password: "111111",
-                         password_confirmation: "11111"
-                       })
-  }
 
   context "for logged in users" do
     before (:each) do
@@ -15,6 +10,12 @@ describe "Election Creation" do
     after (:each) do
       logout(:user)
     end
+
+    let(:user) { User.new({email: "guy@gmail.com",
+                           password: "111111",
+                           password_confirmation: "11111"
+                         })
+    }
 
     it "should be available" do
       visit "/"
@@ -33,6 +34,7 @@ describe "Election Creation" do
     end
 
     it "should result in them seeing their election after submitting the form" do
+      "delete this line when other test is done being tested"
       visit new_election_path
       fill_in 'election_title', with: 'test election'
       click_button 'Create Election'
