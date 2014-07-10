@@ -6,7 +6,12 @@ class User < ActiveRecord::Base
   #has_many :elections
   has_and_belongs_to_many :elections
 
-  def elections
+  def ownedElections
     Election.where(owner_id: self.id)
+  end
+
+  def participatingElections
+    self.elections
+
   end
 end

@@ -3,10 +3,18 @@
 <body>
   <h1>Welcome to E-elections!</h1>
   <% if current_user != nil %>
-    <% if !current_user.elections.empty?  %>
+    <% if !current_user.ownedElections.empty?  %>
       <p> Elections that you own: </p>
       <ul>
-        <% current_user.elections.each do |election| %>
+        <% current_user.ownedElections.each do |election| %>
+          <li><%= election.title %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <% if !current_user.participatingElections.empty? %>
+      <p> Elections that you can vote in: </p>
+      <ul>
+        <% current_user.participatingElections.each do |election| %>
           <li><%= election.title %></li>
         <% end %>
       </ul>

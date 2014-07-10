@@ -12,6 +12,37 @@ describe "The home page" do
     expect(page).to have_css('ul.nav li', text: 'Register')
   end
 
+  context "when another user has created an election this user is part of" do
+
+    let(:user) { User.new({email: "guy@gmail.com",
+                           password: "11111111",
+                           password_confirmation: "11111111"
+                         })
+    }
+
+    let(:user2) { User.new({email: "dog@dog.com",
+                           password: "11111111",
+                           password_confirmation: "11111111"
+                         })
+    }
+
+    it "should see that election" do
+      user.save!
+      user2.save!
+
+      login_as(user, scope: :user)
+      visit new_election_path
+      fill_in 'election_title', with: 'test election'
+      fill_in 'emails', with: 'dog@dog.com'
+      click_button 'Create Election'
+      logout(:user)
+
+      login_as(user2, scope: :user)
+      visit '/'
+      expect(page).to have_content('test election')
+      logout(:user2)
+    end
+  end
 
   context "for logged in users" do
 
@@ -42,7 +73,9 @@ describe "The home page" do
         visit "/"
         expect(page).not_to have_content 'Elections that you are participating in:'
       end
-    end
 
+
+
+    end
   end
 end
