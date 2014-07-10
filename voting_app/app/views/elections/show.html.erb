@@ -1,2 +1,10 @@
 This is the 'show' page for the following election:
 <%= @election.title %>
+<% if !(@election.users.empty?) %>
+  <p>Voters in election:<p>
+  <ol>
+  <% @election.users.each do |participant| %>
+    <li><%= participant.email %></li>
+  <% end %>
+  </ol>
+<% end %>

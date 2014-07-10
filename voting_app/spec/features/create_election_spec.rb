@@ -4,6 +4,8 @@ describe "Election Creation" do
 
   context "for logged in users" do
     before (:each) do
+      user.save!
+      user2.save!
       login_as(user,scope: :user)
     end
 
@@ -12,8 +14,14 @@ describe "Election Creation" do
     end
 
     let(:user) { User.new({email: "guy@gmail.com",
-                           password: "111111",
-                           password_confirmation: "11111"
+                           password: "11111111",
+                           password_confirmation: "11111111"
+                         })
+    }
+
+    let(:user2) { User.new({email: "dog@dog.com",
+                           password: "11111111",
+                           password_confirmation: "11111111"
                          })
     }
 
@@ -34,14 +42,24 @@ describe "Election Creation" do
     end
 
     it "should result in them seeing their election after submitting the form" do
-      "delete this line when other test is done being tested"
       visit new_election_path
       fill_in 'election_title', with: 'test election'
       click_button 'Create Election'
       expect(page).to have_content('test election')
+      visit '/'
+      expect(page).to have_content('test election')
+    end
+
+    it "should be able to accept an email" do
+      visit new_election_path
+      fill_in 'election_title', with: 'test election'
+      fill_in 'emails', with: 'dog@dog.com'
+      click_button 'Create Election'
+      expect(page).to have_content('Voters in election:')
+      expect(page).to have_content('dog@dog.com')
+      expect(page).to have_css('ol li', text: 'guy@gmail.com')
     end
   end
-
 
   context "for users not logged in" do
 

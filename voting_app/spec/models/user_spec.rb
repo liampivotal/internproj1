@@ -8,8 +8,4 @@ describe User do
                        })
   }
 
-  it "should respond to creating a new election" do
-    pending("write later")
-    #expect(user).to respond_to :create_a_match
-  end
 end

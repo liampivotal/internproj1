@@ -2,4 +2,14 @@
 </head>
 <body>
   <h1>Welcome to E-elections!</h1>
+  <% if current_user != nil %>
+    <% if !current_user.elections.empty?  %>
+      <p> Elections that you own: </p>
+      <ul>
+        <% current_user.elections.each do |election| %>
+          <li><%= election.title %></li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
 </body>
