@@ -44,6 +44,8 @@ describe "Election Creation" do
     it "should result in them seeing their election after submitting the form" do
       visit new_election_path
       fill_in 'election_title', with: 'test election'
+      fill_in 'options1', with: 'red'
+      fill_in 'options2', with: 'blue'
       click_button 'Create Election'
       expect(page).to have_content('test election')
       visit '/'
@@ -54,10 +56,24 @@ describe "Election Creation" do
       visit new_election_path
       fill_in 'election_title', with: 'test election'
       fill_in 'emails', with: 'dog@dog.com'
+      fill_in 'options1', with: 'red'
+      fill_in 'options2', with: 'blue'
       click_button 'Create Election'
       expect(page).to have_content('Voters in election:')
       expect(page).to have_content('dog@dog.com')
       expect(page).to have_css('ol li', text: 'guy@gmail.com')
+    end
+
+    it "should be able to accept voting choices" do
+      visit '/'
+      click_link 'Create an election'
+      fill_in 'election_title', with: 'another election'
+      fill_in 'options1', with: 'Red'
+      fill_in 'options2', with: 'Blue'
+      click_button 'Create Election'
+      expect(page).to have_content('Choices to vote for')
+      expect(page).to have_content('Red')
+      expect(page).to have_content('Blue')
     end
   end
 

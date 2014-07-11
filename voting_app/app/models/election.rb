@@ -1,7 +1,7 @@
 class Election < ActiveRecord::Base
-  #belongs_to :user
   has_and_belongs_to_many :users
-  #validates :owner, :title, presence: true
+  has_many :choices
+  accepts_nested_attributes_for :choices, allow_destroy: true
 
   def addParticipant(participant)
     if participant.id == nil

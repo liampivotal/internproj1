@@ -4,6 +4,14 @@
   <label for='mails'>Emails</label>
   <input type='text' name='emails' id='mails' />
   <%= f.hidden_field :owner_id, value: current_user.id %>
+  <div>
+
+  </div>
+  <h2> Voting Options </h2>
+  <ol>
+    <li><input type='text' name='options[1]' id='options1'></li>
+    <li><input type='text' name='options[2]' id='options2'></li>
+  </ol>
   <%= f.submit %>
 <% end %>
 

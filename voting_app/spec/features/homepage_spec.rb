@@ -34,6 +34,8 @@ describe "The home page" do
       visit new_election_path
       fill_in 'election_title', with: 'test election'
       fill_in 'emails', with: 'dog@dog.com'
+      fill_in 'options1', with: 'red'
+      fill_in 'options2', with: 'blue'
       click_button 'Create Election'
       logout(:user)
 

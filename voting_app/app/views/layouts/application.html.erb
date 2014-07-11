@@ -62,7 +62,14 @@
         </div>
       </div>
     </div>
-    <%= yield %>
+    <div style='margin-left:25px;'>
+      <div style="color:#880088;text-align:center;">
+        <% flash.each do |name, msg| -%>
+          <%= content_tag :div, msg, class: name %>
+        <% end -%>
+      </div>
+      <%= yield %>
+    </div>
        <footer>
       </footer>
 

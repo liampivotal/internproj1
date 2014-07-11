@@ -12,6 +12,5 @@ class User < ActiveRecord::Base
 
   def participatingElections
     self.elections
-
   end
 end

@@ -1,5 +1,12 @@
-This is the 'show' page for the following election:
-<%= @election.title %>
+<h1>Election: <%= @election.title %></h1>
+<% if !(@election.choices.empty?) %>
+  <p>Choices to vote for:<p>
+  <ol>
+  <% @election.choices.each do |choice| %>
+    <li><%= choice.name %></li>
+  <% end %>
+  </ol>
+<% end %>
 <% if !(@election.users.empty?) %>
   <p>Voters in election:<p>
   <ol>
