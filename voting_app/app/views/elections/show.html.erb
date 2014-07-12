@@ -2,9 +2,14 @@
 <% if !(@election.choices.empty?) %>
   <p>Choices to vote for:<p>
   <ol>
-  <% @election.choices.each do |choice| %>
-    <li><%= choice.name %></li>
-  <% end %>
+    <%= form_tag(vote_elections_path(action: "vote"), method: 'post') do %>
+      <% @election.choices.each do |choice| %>
+        <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post'} %> <%= choice.name %> </li>
+      <% end %>
+      <br/>
+      <%= hidden_field_tag "election_title", @election.title %>
+      <%= submit_tag "Submit Vote" %>
+      <% end %>
   </ol>
 <% end %>
 <% if !(@election.users.empty?) %>

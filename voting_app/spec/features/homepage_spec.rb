@@ -26,7 +26,7 @@ describe "The home page" do
                          })
     }
 
-    it "should see that election" do
+    before (:each) do
       user.save!
       user2.save!
 
@@ -40,11 +40,27 @@ describe "The home page" do
       logout(:user)
 
       login_as(user2, scope: :user)
-      visit '/'
-      expect(page).to have_content('test election')
+    end
+
+    after (:each) do
       logout(:user2)
     end
+
+    it "should see that election" do
+      visit '/'
+      expect(page).to have_content('test election')
+    end
+
+    it "should be able to vote in that election", js: true do
+      visit '/'
+      click_link('test election')
+      find("input[value='red']").click
+      click_button 'Submit Vote'
+      expect(page).to have_content('You voted for red in the election test election')
+    end
   end
+
+
 
   context "for logged in users" do
 

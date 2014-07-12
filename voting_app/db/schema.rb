@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140710215136) do
+ActiveRecord::Schema.define(version: 20140711190327) do
 
   create_table "choices", force: true do |t|
     t.integer  "election_id"
@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20140710215136) do
   create_table "elections_users", id: false, force: true do |t|
     t.integer "election_id"
     t.integer "user_id"
+    t.boolean "voted"
   end
 
   create_table "users", force: true do |t|

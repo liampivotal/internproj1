@@ -50,7 +50,12 @@ class ElectionsController < ApplicationController
     end
   end
 
+  def vote
+    flash[:notice] = "You voted for #{params[:elections_controller][:vote]} in the election #{params[:election_title]}"
+    redirect_to root_path
+  end
   private
+
 
   def election_params
     params.require(:election).permit(:title, :owner_id)
