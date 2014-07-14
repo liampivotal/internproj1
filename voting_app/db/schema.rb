@@ -11,14 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140711190327) do
+ActiveRecord::Schema.define(version: 20140714181937) do
 
   create_table "choices", force: true do |t|
     t.integer  "election_id"
-    t.integer  "votes"
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "votes",       default: 0
   end
 
   create_table "elections", force: true do |t|
@@ -31,7 +31,7 @@ ActiveRecord::Schema.define(version: 20140711190327) do
   create_table "elections_users", id: false, force: true do |t|
     t.integer "election_id"
     t.integer "user_id"
-    t.boolean "voted"
+    t.boolean "voted",       default: false
   end
 
   create_table "users", force: true do |t|

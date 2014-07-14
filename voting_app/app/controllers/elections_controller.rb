@@ -51,7 +51,9 @@ class ElectionsController < ApplicationController
   end
 
   def vote
-    flash[:notice] = "You voted for #{params[:elections_controller][:vote]} in the election #{params[:election_title]}"
+    @election = Election.find(params[:election_id])
+    flash[:notice] = "You voted for #{params[:elections_controller][:vote]} in the election #{@election.title}"
+    @election.vote(params[:user_id], params[:elections_controller][:vote])
     redirect_to root_path
   end
   private

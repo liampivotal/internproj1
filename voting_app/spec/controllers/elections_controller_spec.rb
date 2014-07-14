@@ -49,6 +49,21 @@ describe ElectionsController do
     end
   end
 
-
+  describe "#vote" do
+    it "should update the vote count in an election" do
+      user1.save!
+      testElection = Election.new({ owner_id: user1.id, title: 'owned election'})
+      testElection.save
+      Choice.create(election_id: testElection.id, name: 'red')
+      Choice.create(election_id: testElection.id, name: 'blue')
+      choices = Choice.where(election_id: testElection.id)
+      #p choices.find_by(name:'red')['votes']
+      expect(choices.find_by(name:'red')["votes"]).to eq 0
+      expect(choices.find_by(name:'blue')["votes"]).to eq 0
+      testElection.vote(user1.id, 'blue')
+      expect(choices.find_by(name:'blue')["votes"]).to eq 1
+      expect(choices.find_by(name:'red')["votes"]).to eq 0
+    end
+  end
 
 end

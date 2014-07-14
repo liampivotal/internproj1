@@ -51,12 +51,15 @@ describe "The home page" do
       expect(page).to have_content('test election')
     end
 
-    it "should be able to vote in that election", js: true do
+    it "should be able to vote in that election (and only once)", js: true do
       visit '/'
       click_link('test election')
       find("input[value='red']").click
+      expect(page).to_not have_content('You have already voted in this election!')
       click_button 'Submit Vote'
       expect(page).to have_content('You voted for red in the election test election')
+      click_link('test election')
+      expect(page).to have_content('You have already voted in this election!')
     end
   end
 

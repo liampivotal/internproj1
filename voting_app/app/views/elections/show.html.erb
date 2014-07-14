@@ -1,4 +1,7 @@
 <h1>Election: <%= @election.title %></h1>
+<% if @election.voted?(current_user.id) %>
+  <p> You have already voted in this election!</p>
+<% end %>
 <% if !(@election.choices.empty?) %>
   <p>Choices to vote for:<p>
   <ol>
@@ -7,7 +10,8 @@
         <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post'} %> <%= choice.name %> </li>
       <% end %>
       <br/>
-      <%= hidden_field_tag "election_title", @election.title %>
+      <%= hidden_field_tag "election_id", @election.id %>
+      <%= hidden_field_tag "user_id", current_user.id %>
       <%= submit_tag "Submit Vote" %>
       <% end %>
   </ol>
