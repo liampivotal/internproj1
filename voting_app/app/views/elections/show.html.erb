@@ -12,7 +12,7 @@
     <ol>
       <%= form_tag(vote_elections_path(action: "vote"), method: 'post') do %>
         <% @election.choices.each do |choice| %>
-          <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post'} %> <%= choice.name %> </li>
+          <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post', checked: true} %> <%= choice.name %> </li>
         <% end %>
         <br/>
         <%= hidden_field_tag "election_id", @election.id %>
