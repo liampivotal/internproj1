@@ -6,17 +6,21 @@
     <% if !current_user.ownedElections.empty?  %>
       <p> Elections that you own: </p>
       <ul>
-        <% current_user.ownedElections.each do |election| %>
-          <li><%= link_to election.title, election %></li>
-        <% end %>
+        <div class='owned'>
+          <% current_user.ownedElections.each do |election| %>
+            <li><%= link_to election.title, election %></li>
+          <% end %>
+        </div>
       </ul>
     <% end %>
     <% if !current_user.participatingElections.empty? %>
       <p> Elections that you can vote in: </p>
       <ul>
-        <% current_user.participatingElections.each do |election| %>
-          <li><%= link_to election.title, election %></li>
-        <% end %>
+        <div class= 'participating'>
+          <% current_user.participatingElections.each do |election| %>
+            <li><%= link_to election.title, election %></li>
+          <% end %>
+      </div>
       </ul>
     <% end %>
   <% end %>

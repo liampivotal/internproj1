@@ -35,4 +35,19 @@ class Election < ActiveRecord::Base
     choice.votes += 1
     choice.save
   end
+
+  def evaluate_election
+    winner = 0
+    self.choices.each do |choice|
+      if choice.votes > winner
+        winner = choice.votes
+        self.winner_id = choice.id
+        self.status = "winner"
+      elsif choice.votes == winner
+        self.status = "tie"
+        self.winner_id = choice.id
+      end
+    end
+    self.save
+  end
 end

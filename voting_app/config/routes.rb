@@ -7,10 +7,15 @@ VotingApp::Application.routes.draw do
   resources :elections do
     collection do
       post :vote
+      post :evaluate_election
     end
   end
 
   devise_for :user
+
+  #resources :users do
+  #  post :evaluate_election, on: :collection
+  #end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

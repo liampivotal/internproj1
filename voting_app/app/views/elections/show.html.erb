@@ -1,26 +1,35 @@
 <h1>Election: <%= @election.title %></h1>
-<% if @election.voted?(current_user.id) %>
-  <p> You have already voted in this election!</p>
-<% end %>
-<% if !(@election.choices.empty?) %>
-  <p>Choices to vote for:<p>
-  <ol>
-    <%= form_tag(vote_elections_path(action: "vote"), method: 'post') do %>
-      <% @election.choices.each do |choice| %>
-        <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post'} %> <%= choice.name %> </li>
-      <% end %>
-      <br/>
-      <%= hidden_field_tag "election_id", @election.id %>
-      <%= hidden_field_tag "user_id", current_user.id %>
-      <%= submit_tag "Submit Vote" %>
-      <% end %>
-  </ol>
-<% end %>
-<% if !(@election.users.empty?) %>
-  <p>Voters in election:<p>
-  <ol>
-  <% @election.users.each do |participant| %>
-    <li><%= participant.email %></li>
+<% if @election.status == "winner" %>
+  <h3><%= Choice.find(@election.winner_id).name %> won! </h3>
+<% elsif @election.status == "tie" %>
+  <h3> The election was a tie </h3>
+<% else %>
+  <% if @election.voted?(current_user.id) %>
+    <p> You have already voted in this election!</p>
   <% end %>
-  </ol>
+  <% if !(@election.choices.empty?) %>
+    <p>Choices to vote for:<p>
+    <ol>
+      <%= form_tag(vote_elections_path(action: "vote"), method: 'post') do %>
+        <% @election.choices.each do |choice| %>
+          <li><%= radio_button :elections_controller, :vote, choice.name, {choice: :choice_id, method: 'post'} %> <%= choice.name %> </li>
+        <% end %>
+        <br/>
+        <%= hidden_field_tag "election_id", @election.id %>
+        <%= hidden_field_tag "user_id", current_user.id %>
+        <%= submit_tag "Submit Vote" %>
+        <% end %>
+    </ol>
+  <% end %>
+  <% if !(@election.users.empty?) %>
+    <p>Voters in election:<p>
+    <ol>
+    <% @election.users.each do |participant| %>
+      <li><%= participant.email %></li>
+    <% end %>
+    </ol>
+  <% end %>
+  <% if current_user.id == @election.owner_id %>
+    <%= link_to 'End election and evaluate results', {controller: :elections, action: :evaluate_election, id: @election.id}, {method: :post} %>
+  <% end %>
 <% end %>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140714181937) do
+ActiveRecord::Schema.define(version: 20140714190525) do
 
   create_table "choices", force: true do |t|
     t.integer  "election_id"
@@ -26,6 +26,8 @@ ActiveRecord::Schema.define(version: 20140714181937) do
     t.datetime "updated_at"
     t.string   "title"
     t.integer  "owner_id"
+    t.string   "status"
+    t.integer  "winner_id"
   end
 
   create_table "elections_users", id: false, force: true do |t|

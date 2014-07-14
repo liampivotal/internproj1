@@ -50,6 +50,12 @@ class ElectionsController < ApplicationController
     end
   end
 
+  def evaluate_election
+    @election = Election.find(params[:id])
+    @election.evaluate_election
+    redirect_to @election
+  end
+
   def vote
     @election = Election.find(params[:election_id])
     flash[:notice] = "You voted for #{params[:elections_controller][:vote]} in the election #{@election.title}"
