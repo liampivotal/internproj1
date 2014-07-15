@@ -64,6 +64,19 @@ describe "Election Creation" do
       expect(page).to have_css('ol li', text: 'guy@gmail.com')
     end
 
+    it "should be able to add users to the election after creation" do
+      visit new_election_path
+      fill_in 'election_title', with: 'test election'
+      fill_in 'options1', with: 'red'
+      fill_in 'options2', with: 'blue'
+      click_button 'Create Election'
+      fill_in 'Add new emails', with: 'dog@dog.com'
+      click_button 'Update Election'
+      expect(page).to have_content('dog@dog.com')
+
+    end
+
+
     it "should be able to accept voting choices" do
       visit '/'
       click_link 'Create an election'

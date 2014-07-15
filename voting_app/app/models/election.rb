@@ -4,6 +4,9 @@ class Election < ActiveRecord::Base
   accepts_nested_attributes_for :choices, allow_destroy: true
 
   def addParticipant(participant)
+    if participant == nil
+      raise ArgumentError, 'invalid user email'
+    end
     if participant.id == nil
       raise ArgumentError, 'participant has no id'
     end

@@ -9,6 +9,13 @@ class ElectionsController < ApplicationController
   end
 
   def validElection?
+    email_array = params[:emails].split(',')
+    email_array.each do |email|
+      if User.find_by(email: email.strip) == nil
+        flash[:notice] = "There is no user with email #{email}"
+        return false
+      end
+    end
     if params[:election][:title] == ""
       flash[:notice] = 'Election requires a title'
       return false
@@ -39,7 +46,7 @@ class ElectionsController < ApplicationController
       email_array = params[:emails].split(',')
       email_array << owner_email unless email_array.include?(owner_email)
       email_array.each do |email|
-        @election.addParticipant(User.find_by(email: email))
+        @election.addParticipant(User.find_by(email: email.strip))
       end
 
       flash[:notice] = 'Election was created'
@@ -56,6 +63,19 @@ class ElectionsController < ApplicationController
     redirect_to @election
   end
 
+  def addParticipants
+    @election = Election.find(params[:id])
+    emails = params[:emails]
+    existing_emails = @election.users.map{|user| user.email}
+    emails.split(',').each do |email|
+      name = email.strip()
+      if !existing_emails.include?(name)
+        @election.addParticipant(User.find_by(email: email))
+      end
+    end
+    redirect_to @election
+  end
+
   def vote
     @election = Election.find(params[:election_id])
     flash[:notice] = "You voted for #{params[:elections_controller][:vote]} in the election #{@election.title}"
@@ -64,6 +84,9 @@ class ElectionsController < ApplicationController
   end
   private
 
+  def userToEmail(user)
+    user.email
+  end
 
   def election_params
     params.require(:election).permit(:title, :owner_id)

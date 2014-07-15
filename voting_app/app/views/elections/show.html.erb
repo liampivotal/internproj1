@@ -30,6 +30,14 @@
     </ol>
   <% end %>
   <% if current_user.id == @election.owner_id %>
+
+    <%= form_tag controller: :elections, action: :addParticipants, method: 'post' do %>
+      <label for='mails'>Add new emails</label>
+      <input type='text' name='emails' id='mails' />
+      <%= hidden_field_tag :id, @election.id %>
+      <%= submit_tag 'Update Election'%>
+    <% end %>
+
     <%= link_to 'End election and evaluate results', {controller: :elections, action: :evaluate_election, id: @election.id}, {method: :post} %>
   <% end %>
 <% end %>

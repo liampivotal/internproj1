@@ -8,6 +8,7 @@ VotingApp::Application.routes.draw do
     collection do
       post :vote
       post :evaluate_election
+      post :addParticipants
     end
   end
 
